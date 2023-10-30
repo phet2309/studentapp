@@ -35,18 +35,20 @@ public class CourseServlet extends HttpServlet {
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 
+
                 out.println("<html><head><title>NJIT Registration System</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"./resources/styles.css\">\n</head><body>");
-                if(resultSet.next())
-                    out.println("<h1>Courses for " + selectedSemester + "</h1>");
-                else
+
+                if(request.getParameter("semester").equals("0"))
                     out.println("<h1>Invalid Selection</h1>");
+                else
+                    out.println("<h1>Courses for " + selectedSemester + "</h1>");
 
                 while (resultSet.next()) {
                     String courseCode = resultSet.getString("course_code");
                     String semester = resultSet.getString("semester");
                     String courseName = resultSet.getString("course_name");
 
-                    out.println("<div class=\"message-div\">\n" +
+                    out.println("<div class=\"message-div\" style=\"text-align: left;\">\n" +
                             courseCode + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + semester + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + courseName + "</div>");
 
                 }
@@ -66,10 +68,14 @@ public class CourseServlet extends HttpServlet {
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 
+
                 out.println("<html><head><title>NJIT Registration System</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"./resources/styles.css\">\n</head><body>");
                 if (resultSet.next()) {
                     String courseName = resultSet.getString("course_name");
                     out.println("<h1>You are registered in " + courseName + " for " + semester1 + ".</h1>");
+                    out.println("</body></html>");
+                } else if(courseID.isEmpty() || semester1.isEmpty()) {
+                    out.println("<h1>Invalid Input.</h1>");
                     out.println("</body></html>");
                 } else {
                     out.println("<h1>The course is not offered.</h1>");
