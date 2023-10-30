@@ -1,0 +1,85 @@
+<html>
+<head>
+    <title>NJIT Registration System</title>
+    <link rel="stylesheet" type="text/css" href="./resources/styles.css">
+
+</head>
+<body>
+<h1>Welcome to course registration site of NJIT</h1>
+<form action="CourseServlet" method="post">
+    <div style="display: flex; flex-direction: column">
+        <div class="form-field">
+            <input type="radio" id="courseSearch" name="selection" value="courseSearch" onClick="renderComponent('courseSearch')">
+            <label for="courseSearch">Course Search</label>
+        </div>
+
+        <div class="form-field">
+            <input type="radio" id="courseRegistration" name="selection" value="courseRegistration" onClick="renderComponent('courseRegistration')">
+            <label for="courseRegistration">Course Registration</label>
+        </div>
+    </div>
+</form>
+
+<div id="courseSearchDiv" style="display: none;">
+    <form action="CourseServlet" method="post" style="margin-top: 20px">
+        <label for="semester">Semester:</label>
+        <select name="semester" id="semester">
+            <option value="0" selected>Select Semester</option>
+            <option value="Fall2024">Fall 2024</option>
+            <option value="Spring2024">Spring 2024</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<div id="courseRegistrationDiv" style="display: none;">
+    <form action="CourseServlet" method="post" style="margin-top: 20px">
+        <div class="form-field">
+            <label for="courseID">Course ID:</label>
+            <input style="margin-left: 10px" type="text" id="courseID" name="courseID">
+        </div>
+        <div class="form-field">
+            <label for="semester1">Semester:</label>
+            <input style="margin-left: 14px" type="text" id="semester1" name="semester1">
+        </div>
+        <button>Register</button>
+    </form>
+</div>
+
+</body>
+<script>
+    document.getElementById('courseSearchDiv').style.display = 'none';
+    document.getElementById('courseRegistrationDiv').style.display = 'none';
+
+    function renderComponent(selectedComponent) {
+        if (selectedComponent === 'courseSearch') {
+            renderCourseSearchComponent();
+        } else if (selectedComponent === 'courseRegistration') {
+            renderCourseRegistrationComponent();
+        }
+    }
+
+    function renderCourseSearchComponent() {
+        console.log("Rendering Course Search Component");
+
+        const courseIDInput = document.getElementById("courseID");
+        const semesterInput = document.getElementById("semester1");
+
+        courseIDInput.value = "";
+        semesterInput.value = "";
+
+        document.getElementById("courseSearchDiv").style.display = 'block';
+        document.getElementById("courseRegistrationDiv").style.display = 'none';
+
+    }
+
+    function renderCourseRegistrationComponent() {
+        console.log("Rendering Course Registration Component");
+        const semesterSelect = document.getElementById("semester");
+        semesterSelect.selectedIndex = 0;
+
+        document.getElementById("courseRegistrationDiv").style.display = 'block';
+        document.getElementById("courseSearchDiv").style.display = 'none';
+    }
+</script>
+</html>
